@@ -25,5 +25,6 @@ int dev_close(sfs_dev_t device);
 int dev_read(sfs_dev_t device, long int block_num, char *buf);
 int dev_write(sfs_dev_t device, long int block_num, char *buf);
 long int block_num_to_offset(long int block_num);
+int check_if_valid_block(long int block_num);
 
 #endif

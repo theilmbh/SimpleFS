@@ -36,6 +36,11 @@ void open_block_device_test() {
 
 }
 
+void open_invalid_block_device_test() 
+{
+
+}
+
 void report_test(char* name, test_result_t outcome) {
 	if(outcome) {
 		printf("Test was success\n");

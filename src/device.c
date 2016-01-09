@@ -37,8 +37,8 @@ int dev_close(sfs_dev_t device)
 int dev_read(sfs_dev_t device, long int block_num, char *buf)
 {
 	/* Check if block_num is sane */
-	if(block_num < 0 | block_num > NR_BLOCKS) {
-		printf("DEVICE: 'block_num' does not make sense. 'block_num'=%d", block_num);
+	if(!check_if_valid_block(block_num)) {
+		return -1;
 	}
 	/* Convert block num to file offset */
 	long int offset = block_num_to_offset(block_num);
@@ -59,9 +59,37 @@ int dev_read(sfs_dev_t device, long int block_num, char *buf)
 int dev_write(sfs_dev_t device, long int block_num, char *buf)
 {
 	printf("DEVICE: 'write' not implemented\n");
+	if(!check_if_valid_block(block_num)) {
+		return -1;
+	}
+
+	long int offset = block_num_to_offset(block_num);
+
+	fseek(dev_fd, offset, SEEK_SET);
+
+	/* write */
+	size_t n = fwrite(buf, sizeof(char), BYTESPERBLOCK, dev_fd);
+	if(n != BYTESPERBLOCK) {
+		printf("Unable to write block-sized chunk from the disk file\n");
+		return -1;
+	}
 	return 0;
+	
 }
 
 long int block_num_to_offset(long int block_num) {
 	return block_num*BYTESPERBLOCK;
+}
+
+int check_if_valid_block(long int block_num)
+{
+		/* Check if block_num is sane */
+	if(block_num < 0 | block_num > NR_BLOCKS) {
+		printf("DEVICE: 'block_num' does not make sense. 'block_num'=%d", block_num);
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
