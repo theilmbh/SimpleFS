@@ -5,6 +5,7 @@
 #include <errno.h>
 
 #include "device.h"
+#include "sfs_types.h"
 
 
 
@@ -33,7 +34,7 @@ int dev_close(sfs_dev_t device)
 }
 
 /* Read a block from a block device */
-int dev_read(sfs_dev_t device, long int block_num, char *buf)
+int dev_read(sfs_dev_t device, sfs_block_num_t block_num, char *buf)
 {
 	/* Check if block_num is sane */
 	if(!check_if_valid_block(block_num)) {
@@ -59,7 +60,7 @@ int dev_read(sfs_dev_t device, long int block_num, char *buf)
 }
 
 /* Write a block from a block device */
-int dev_write(sfs_dev_t device, long int block_num, char *buf)
+int dev_write(sfs_dev_t device, sfs_block_num_t block_num, char *buf)
 {
 	
 	if(!check_if_valid_block(block_num)) {
@@ -83,11 +84,11 @@ int dev_write(sfs_dev_t device, long int block_num, char *buf)
 	
 }
 
-long int block_num_to_offset(long int block_num) {
+long int block_num_to_offset(sfs_block_num_t block_num) {
 	return block_num*BYTESPERBLOCK;
 }
 
-int check_if_valid_block(long int block_num)
+int check_if_valid_block(sfs_block_num_t block_num)
 {
 		/* Check if block_num is sane */
 	if(block_num < 0 | block_num > NR_BLOCKS) {
