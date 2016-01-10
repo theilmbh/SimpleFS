@@ -7,8 +7,6 @@
 #include "device.h"
 #include "sfs_types.h"
 
-
-
 /* Open a block device */
 int dev_open(sfs_dev_t device)
 {
