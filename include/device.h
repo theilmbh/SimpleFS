@@ -5,6 +5,9 @@
 /* Block Device Definitions */
 
 #define NR_DEVS 16 /* Max num of open devices */
+#define DEV_MAJOR 8
+#define BYTESPERBLOCK 1024
+#define NR_BLOCKS 1024
 
 /* Define dev_t */
 typedef struct sfs_dev_t {
