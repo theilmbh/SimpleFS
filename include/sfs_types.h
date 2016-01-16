@@ -9,4 +9,11 @@ typedef unsigned int sfs_f_size_t;
 typedef unsigned int sfs_block_num_t;
 typedef unsigned int sfs_ino_t;
 
+/* Define dev_t */
+typedef struct sfs_dev_t {
+	int major;
+	int minor;
+}	sfs_dev_t;
+
+
 #endif
