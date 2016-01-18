@@ -34,3 +34,5 @@ struct sfs_block_buf *rear;
 int bufs_in_use;
 
 #define HASH_MASK (NR_BUF_HASH - 1)
+#define	BLOCK_READ 1
+#define BLOCK_WRITE 0

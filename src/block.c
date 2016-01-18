@@ -90,7 +90,46 @@ void sfs_put_block(struct sfs_block_buf *bp, int block_type)
 
 }
 
+struct sfs_block_buf *alloc_block(sfs_dev_t dev, sfs_block_num_t block_num)
+{
+	struct sfs_block_buf *bp;
+	return bp;
+}
+
+void free_block(sfs_dev_t dev, sfs_block_num_t block)
+{
+
+}
+
 int rw_bock(struct sfs_block_buf *bp, int rw_flag)
 {
-	
+	if (bp->b_dev != NO_DEV) {
+		if (rw_flag == BLOCK_READ) {
+			dev_read(bp->b_dev, bp->b_blocknum, bp->b.b_data);
+		} else {
+			dev_write(bp->b_dev, bp->b_blocknum, bp->b.b_data);
+		}
+	}
+
+}
+
+void rm_lru(struct sfs_block_buf *bp)
+{
+	struct sfs_block_buf *next_ptr, *prev_ptr;
+
+	bufs_in_use++;
+	next_ptr = bp->b_next;
+	prev_ptr = bp->b_prev;
+
+	if (prev_ptr != NIL_BUF) {
+		prev_ptr->b_next = next_ptr;
+	} else {
+		front = next_ptr;
+	}
+
+	if (next_ptr != NIL_BUF) {
+		next_ptr->b_prev = prev_ptr;
+	} else {
+		rear = prev_ptr;
+	}
 }
