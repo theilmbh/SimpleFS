@@ -68,6 +68,25 @@ struct sfs_block_buf *sfs_get_block(sfs_dev_t dev, sfs_block_num_t block_num)
 
 void sfs_put_block(struct sfs_block_buf *bp, int block_type)
 {
+	/* Returns a block being used to the lru chain */
+
+	if (bp == NIL_BUF) return;
+	bp->b_count--; 
+	if (bp->b_count != 0) return; /* Block is still in use */
+
+	/* We (should) could check what kind of block this is, 
+	 * to determine where to put it.  I'll skip that for now 
+	 */
+	bp->b_prev = rear;
+	bp->b_next = NIL_BUF;
+	if (rear == NIL_BUF) { /* block buf is empty */
+		front = bp;
+	} else {
+		rear->b_next = bp;
+	}
+	rear = bp;
+
+	/* TODO: CHECK TO SEE IF BLOCK IS 'IMPORTANT'.  IF SO, WRITE TO DISK */
 
 }
 
