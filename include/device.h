@@ -5,11 +5,6 @@
 #include "sfs_types.h"
 #include "sfs_const.h"
 
-/* Define dev_t */
-typedef struct sfs_dev_t {
-	int major;
-	int minor;
-}	sfs_dev_t;
 
 struct sfs_dev_table {
 	sfs_dev_t device;

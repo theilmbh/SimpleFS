@@ -22,7 +22,15 @@ struct sfs_block_buf {
 	sfs_block_num_t b_blocknum;
 	sfs_dev_t b_dev;
 	char b_dirty;
-	char b_char;
+	char b_count;
 }	sfs_block_buf[NR_BUFS];
 
+struct sfs_block_buf *sfs_buf_hash[NR_BUF_HASH];
 
+#define NIL_BUF ((struct sfs_block_buf *) 0)
+
+struct sfs_block_buf *front;
+struct sfs_block_buf *rear;
+int bufs_in_use;
+
+#define HASH_MASK (NR_BUF_HASH - 1)
