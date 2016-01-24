@@ -87,6 +87,9 @@ void sfs_put_block(struct sfs_block_buf *bp, int block_type)
 	rear = bp;
 
 	/* TODO: CHECK TO SEE IF BLOCK IS 'IMPORTANT'.  IF SO, WRITE TO DISK */
+	if ((block_type & SFS_WRITE_IMMED) && bp->b_dirty==DIRTY && bp->b_dev != NO_DEV) {
+		rw_block(bp, BLOCK_WRITE)
+	}
 
 }
 
