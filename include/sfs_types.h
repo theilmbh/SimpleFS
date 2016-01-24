@@ -8,6 +8,7 @@ typedef char sfs_uid_t;
 typedef unsigned int sfs_f_size_t;
 typedef unsigned int sfs_block_num_t;
 typedef unsigned int sfs_ino_t;
+typedef unsigned int sfs_bit_t
 
 /* Define dev_t */
 typedef struct sfs_dev_t {

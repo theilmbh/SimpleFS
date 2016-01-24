@@ -93,10 +93,19 @@ void sfs_put_block(struct sfs_block_buf *bp, int block_type)
 
 }
 
-struct sfs_block_buf *alloc_block(sfs_dev_t dev, sfs_block_num_t block_num)
+struct sfs_block_num_t alloc_block(sfs_dev_t dev, sfs_block_num_t block_num)
 {
-	struct sfs_block_buf *bp;
-	return bp;
+	sfs_super_block *sp;
+	sfs_bit_t bit;
+
+	sp = get_super(dev);
+
+	bit = alloc_bit(sp, BMAP, (sfs_bit_t) block_num);
+	if (bit == NO_BIT) {
+		printf("No space on device!\n");
+		return NO_BLOCK;
+	}
+	return (sfs_block_num_t) bit;
 }
 
 void free_block(sfs_dev_t dev, sfs_block_num_t block)
