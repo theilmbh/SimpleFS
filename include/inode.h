@@ -34,4 +34,6 @@ struct __attribute__ ((__packed__)) sfs_disk_inode {
 	sfs_block_num_t i_block[NR_I_BLOCK];
 };
 
+#define NIL_INODE ((struct sfs_inode *) 0)
+
 #endif
