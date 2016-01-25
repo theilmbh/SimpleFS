@@ -1,8 +1,10 @@
 /* inode.c                   */
 /* routines to manage inodes */
+#include <stdio.h>
 
 #include "inode.h"
 #include "sfs_types.h"
+#include "sfs_const.h"
 
 struct sfs_inode *get_inode(sfs_dev_t dev, sfs_ino_t num)
 {
@@ -40,6 +42,7 @@ struct sfs_inode *get_inode(sfs_dev_t dev, sfs_ino_t num)
 
 void put_inode(struct sfs_inode *rip)
 {
+	if (rip == NIL_INODE) return;
 	rip->i_count--;
 	if (rip->i_count == 0) {
 		/* inode no longer in use.  move back to disk */
@@ -80,3 +83,12 @@ struct sfs_inode *alloc_inode(sfs_dev_t dev, sfs_mode_t bits)
 	}
 	return(rip);
 }
+
+void wipe_inode(struct sfs_inode *rip)
+{
+	int i;
+	rip->i_size = 0;
+	rip->i_dirty = DIRTY;
+	for (i = 0; i < NR_I_BLOCK; i++) rip->i_block = NO_BLOCK;
+}
+
