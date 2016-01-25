@@ -110,6 +110,11 @@ struct sfs_block_num_t alloc_block(sfs_dev_t dev, sfs_block_num_t block_num)
 
 void free_block(sfs_dev_t dev, sfs_block_num_t block)
 {
+	/* Frees a block */
+	sfs_super_block *sp;
+	sp = get_super(dev);
+
+	free_bit(sp, BMAP, (sfs_bit_t) block_num);
 
 }
 
@@ -143,5 +148,14 @@ void rm_lru(struct sfs_block_buf *bp)
 		next_ptr->b_prev = prev_ptr;
 	} else {
 		rear = prev_ptr;
+	}
+}
+
+void flushall(sfs_dev_t dev)
+{
+	/* Write all dirty blocks to disk */
+	struct sfs_block_buf_t *buf;
+	for (buf = &sfs_block_buf[0]; buf <= &sfs_block_buf[NR_BUFS]; buf++) {
+		
 	}
 }

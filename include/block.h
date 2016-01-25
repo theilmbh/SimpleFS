@@ -6,7 +6,7 @@
 #include "sfs_types.h"
 
 /* Block Buffer*/
-struct sfs_block_buf {
+struct sfs_block_buf_t {
 	/* Data portion */
 	union {
 		char b_data[BYTESPERBLOCK];

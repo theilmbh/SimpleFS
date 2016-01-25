@@ -13,8 +13,9 @@
 #define NR_DEVS 16 /* Max num of open devices */
 #define DEV_MAJOR 8
 #define BYTESPERBLOCK 1024
-#define NR_BLOCKS 1024
+#define NR_BLOCKS 1024 
 
 #define NR_BUF_HASH 256
+#define NR_BUFS 256
 
 #endif
