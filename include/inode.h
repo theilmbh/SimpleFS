@@ -24,6 +24,7 @@ struct sfs_inode {
 	int i_nindirs;
 	char i_dirt;
 	char i_seek
+	struct sfs_super_block *i_sp;
 } sfs_inode_tab[NR_INODES];
 
 /* The disk version of the inode */

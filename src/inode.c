@@ -46,3 +46,37 @@ void put_inode(struct sfs_inode *rip)
 		rw_indoe(rip, INODE_WRITE);
 	}
 }
+
+struct sfs_inode *alloc_inode(sfs_dev_t dev, sfs_mode_t bits)
+{
+	struct sfs_inode *rip;
+	struct sfs_super_block *sp;
+	sfs_bit_t b;
+	int inum;
+
+	sp = get_super(dev);
+	if (sp->s_rd_ony) {
+		return (NIL_INODE);
+	}
+
+	/* Acquire inode bit from bitmap */
+	b = alloc_bit(dev, IMAP, sp->s_isearch)
+	if (b == NO_BIT) {
+		printf("Out of inodes!\n")
+		return(NIL_INODE);
+	}
+
+	inum = (int) b;
+	/* try to find slot in inode table */
+	if((rip = get_inode(NO_DEV, inumb)) == NIL_INODE) {
+		free_bit(sp, IMAP, b);
+	} else {
+		rip->i_mode = bits;
+		rip->i_dev = dev;
+		rip->i_ndblock = sp->s_ndblock;
+		rip->i_nindirs = sp->s_nindirs;
+		rip->i_sp = sp;
+		wipe_inode(rip);
+	}
+	return(rip);
+}
