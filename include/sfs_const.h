@@ -18,6 +18,9 @@
 #define NR_BUF_HASH 256
 #define NR_BUFS 256
 
-#define NO_BLOCK 0;
+#define NO_BLOCK 0
+
+#define SUPERBLOCK_NUM 1
+#define NR_SUPERS 4
 
 #endif
